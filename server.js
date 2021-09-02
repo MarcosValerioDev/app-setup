@@ -35,4 +35,4 @@ mongoose.connection.on('connected', ()=>{
 
 app.use(router);
 
-app.listen(4000);
+app.listen(process.env.PORT || 4000);
