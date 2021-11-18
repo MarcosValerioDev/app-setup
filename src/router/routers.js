@@ -1,27 +1,24 @@
 const express = require('express');
 const router = express.Router();
-const Users = require('../models/user');
+const UserController = require('../controlers/userController');
+const ProdutoController = require('../controlers/produtoController');
 
-router.get('/', async (req, res) => {
-    try {
-        const users = await Users.find({});
-        return res.send(users);
-    }
-    catch (err) {
-        return res.status(500).send({ error: 'Erro na consulta de usuários!' });
-    }
-});
 
-router.post('/create', async (req, res) => {
-   
+// router.get('/', async (req, res) => {
+//     try {
+//         const users = await Users.find({});
+//         return res.send(users);
+//     }
+//     catch (err) {
+//         return res.status(500).send({ error: 'Erro na consulta de usuários!' });
+//     }
+// });
 
-        const user = await Users.create(req.body);
-        user.password = undefined;
-
-        return res.status(201).send({user});
-
-});
+router.post('/createUser', UserController.createuser);
+router.post('/siginin', UserController.signin);
+router.post('/getProdState', ProdutoController.getProdState);
 
 
 
-module.exports = router;
+
+module.exports = router; 
