@@ -3,11 +3,11 @@ const Produto = require('../models/produto-controle');
  const ProdutoController = {
     createProd : async (req, res)=>{
         const { name, description, state } = req.body;
-        const dados = await Users.create({ name, description, state });
+        const dados = await Produto.create({ name, description, state });
         return res.status(201).send("Create");
     },
     getProdState : async (req, res) =>{
-        const { name } = req.body.name;
+        const { name } = req.body;
         const prod = await Produto.findOne({name}).exec();
         console.log(prod);
         if (prod.state=="on") return res.status(201).send("isOpen"); 
