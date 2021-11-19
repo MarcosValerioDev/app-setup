@@ -13,8 +13,10 @@ const UserController ={
     signin : async (req, res) =>{
         const { email, password } = req.body;
         const user = await Users.findOne({ email, password }).exec();
-        if (!user) return res.status(201).send("isSigned"); 
-        else  return res.status(201).send("notSigned");
+
+        if (!user) return res.status(201).send("notExist"); 
+        
+        return res.status(201).send("Signed");
     }
 }
 
