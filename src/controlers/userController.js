@@ -17,7 +17,7 @@ const UserController ={
 
         if (!user) return res.status(201).send("notExist"); 
         
-        return res.status(201).send("Signed");
+        return res.status(201).send(user.name);
     }
 }
 
