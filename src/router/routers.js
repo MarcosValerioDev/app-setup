@@ -17,7 +17,7 @@ const ProdutoController = require('../controlers/produtoController');
 router.post('/createUser', UserController.createuser);
 router.post('/siginin', UserController.signin);
 router.post('/getProdState', ProdutoController.getProdState);
-
+router.post('/createProd', ProdutoController.createProd);
 
 
 
