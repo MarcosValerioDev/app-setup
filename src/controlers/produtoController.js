@@ -16,6 +16,13 @@ const Produto = require('../models/produto-controle');
         const prod = await Produto.find();
         if (prod) return res.status(201).send({"cod":"0",prod}); 
         else  return res.status(201).send({"cod":"1","msg":"Nenhum produto encontrado."});
+    },
+    alteraStateProd: async (req, res) =>{
+        const { _id, state } = req.body;
+        await Produto.updateOne({_id}, {state});
+        const prod = await Produto.find();
+        if (prod) return res.status(201).send({"cod":"0",prod}); 
+        else  return res.status(201).send({"cod":"1","msg":"Nenhum produto encontrado."});
     }
 }
 

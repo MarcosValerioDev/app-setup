@@ -19,6 +19,8 @@ router.post('/siginin', UserController.signin);
 router.post('/getProdState', ProdutoController.getProdState);
 router.post('/createProd', ProdutoController.createProd);
 router.get('/getProds', ProdutoController.getProds);
+router.post('/alteraStateProd', ProdutoController.alteraStateProd);
+
 
 
 module.exports = router; 
