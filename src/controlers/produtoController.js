@@ -9,9 +9,13 @@ const Produto = require('../models/produto-controle');
     getProdState : async (req, res) =>{
         const { name } = req.body;
         const prod = await Produto.findOne({name}).exec();
-        console.log(prod);
         if (prod.state=="on") return res.status(201).send("isOpen"); 
         else  return res.status(201).send("isClose");
+    },
+    getProds : async (req, res) =>{
+        const prod = await Produto.find();
+        if (prod) return res.status(201).send({"cod":"0",prod}); 
+        else  return res.status(201).send({"cod":"1","msg":"Nenhum produto encontrado."});
     }
 }
 

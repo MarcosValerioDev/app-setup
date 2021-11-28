@@ -18,7 +18,7 @@ router.post('/createUser', UserController.createuser);
 router.post('/siginin', UserController.signin);
 router.post('/getProdState', ProdutoController.getProdState);
 router.post('/createProd', ProdutoController.createProd);
-
+router.get('/getProds', ProdutoController.getProds);
 
 
 module.exports = router; 
