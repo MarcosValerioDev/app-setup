@@ -3,7 +3,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 function sendEmail(email,username, hash){
     const msg = {
-        to: `rafaelduaibesapp@gmail.com`,
+        to: email,
         from: 'rafaelduaibesapp@gmail.com', // Use the email address or domain you verified above
         subject: 'RECUPERAÇÃO DE SENHA SETUP',
         text: 'Clique no link para recuperar sua senha.',
