@@ -7,7 +7,7 @@ const RecoverPasswordController ={
         const { email, name } = req.body;
         const hash = uuid.v1();
         const userCheck = await RecoverPassword.create({ email, hash });
-        if (userCheck) return res.status(200).send(userCheck);
+    
         if (userCheck) {
              await sendMail(email, name, hash)
              return res.status(201).send("Verifique seu email, para finalizar o processo de recuperação de senha.");
