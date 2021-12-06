@@ -16,7 +16,7 @@ const RecoverPasswordController ={
          else return res.status(200).send("Esta conta não existe.");  
         }
         catch(erro){
-            return res.status(200).send({erro, "cath" });  
+            return res.status(200).send({erro, "cath":"cath" });  
             
         }
     },
