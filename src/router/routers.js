@@ -6,7 +6,6 @@ const UserAdminController = require("../controlers/userAdminController");
 
 router.post('/createUser', UserController.createuser);
 router.post('/signin', UserController.signin);
-router.post('/recoverPassword', RecoverPasswordController.rpassowrd);
 router.post('/checkHash', RecoverPasswordController.checkHash);
 router.post('/alterPassword', UserController.alterPassword);
 
