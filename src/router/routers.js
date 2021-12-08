@@ -8,6 +8,7 @@ router.post('/signin', UserController.signin);
 router.post('/alterPassword', UserController.alterPassword);
 router.post('/delete', UserController.deleteUser);
 router.post('/getUsers', UserController.getUsers);
+router.post('/updateTime', UserController.updateTime);
 
 router.post('/adminSignin', UserAdminController.signinAdimin);
 router.post('/changePasswordAdmin', UserAdminController.changePassword);

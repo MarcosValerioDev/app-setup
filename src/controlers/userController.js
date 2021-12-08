@@ -13,8 +13,6 @@ const UserController ={
             user.password = undefined;
             return res.status(201).send("Create");
         }) 
-
-       
     },
     alterPassword : async (req, res)=>{
         const { email, password } = req.body;
@@ -25,6 +23,11 @@ const UserController ={
         
             return res.status(201).send("2");
         }) 
+    },
+    updateTime : async (req, res)=>{
+        const { timeuse, email } = req.body;
+            await Users.updateOne({email}, {timeuse}).exec();
+            return res.status(201).send("ok");
     },
     signin : async (req, res) =>{
         const { email, password } = req.body;
