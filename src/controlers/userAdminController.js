@@ -23,9 +23,14 @@ const UserAdminController ={
     },
     changePassword : async (req, res)=>{
         const { username, password } = req.body;
-        const userCheck = await UserAdmin.updateOne({username}, {password}).exec();
-      
-        if (userCheck) res.status(200).send("Ok");
+
+     
+       bcrypt.hash(password,10,async function (err, encrypted){
+            if (!encrypted) return res.status(200).send("Erro");
+            const userCheck = await UserAdmin.updateOne({username}, {"password":encrypted}).exec();
+            if (userCheck) return res.status(200).send("Ok");
+            }) 
+        
     }
 }
 
