@@ -1,5 +1,4 @@
 const Users = require('../models/user');
-const RecoverPassword = require('../models/recoverPassword');
 const bcrypt = require('bcrypt');
 const UserController ={
     createuser : async (req, res)=>{
@@ -23,7 +22,7 @@ const UserController ={
             if (!encrypted) return res.status(200).send("Erro");
             const ps = encrypted;
             await Users.updateOne({email}, {"password" : ps}).exec();
-            await RecoverPassword.deleteOne({ email });
+        
             return res.status(201).send("2");
         }) 
     },
@@ -35,6 +34,15 @@ const UserController ={
         const check = await bcrypt.compare(password, user.password);
         if (!check) return res.status(201).send("Erro na autenticação de usuário, confira seus dados.");
         return res.status(201).send(user.name);
+    },
+    deleteUser: async (req, res)=>{
+        const { email } = req.body;
+        await Users.deleteOne({ email })
+        return res.status(200).send("ok");
+    },
+    getUsers: async (req, res)=>{
+        const users = await Users.find()
+        return res.status(200).send(users);
     }
 }
 
