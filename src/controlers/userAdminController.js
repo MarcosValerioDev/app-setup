@@ -4,10 +4,10 @@ const bcrypt = require('bcrypt')
 const UserAdminController ={
     createUserAdmin : async (req, res)=>{
         const { username, password } = req.body;
-        await bcrypt.hash(password,100,async function (err, encrypted){
+        bcrypt.hash(password,10,async function (err, encrypted){
             if (!encrypted) return res.status(200).send("Erro");
-            password = ecrypted;
-            const user = await UserAdmin.create({ username, password });
+            const ps = encrypted;
+            const user = await UserAdmin.create({ username, "password": ps });
             user.password = undefined;
             return res.status(201).send("Create");
             }) 
