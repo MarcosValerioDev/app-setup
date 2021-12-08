@@ -14,8 +14,11 @@ const UserAdminController ={
     },
     signinAdimin : async (req, res)=>{
         const { username, password } = req.body;
-        const userCheck = await UserAdmin.findOne({username, password}).exec();
-        if (userCheck) res.status(200).send("Ok.");
+        
+        const userCheck = await UserAdmin.findOne({username}).exec();
+        if (!userCheck) res.status(200).send("erro");
+        const pass = await bcrypt.compare(password,userCheck.password);
+        if (pass) res.status(200).send("Ok.");
         else return res.status(200).send("erro");  
     },
     changePassword : async (req, res)=>{
