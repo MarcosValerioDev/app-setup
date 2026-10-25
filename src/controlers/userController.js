@@ -3,26 +3,21 @@ const bcrypt = require('bcrypt');
 const UserController ={
     createuser : async (req, res)=>{
         const { name, password, email } = req.body;
-        const userCheck = await Users.findOne({ email, password }).exec();
+        if (!email || !password) return res.status(200).send("Erro");
+        const userCheck = await Users.findOne({ email: email.toLowerCase() }).exec();
 
-        if (userCheck) return res.status(201).send("Existe"); 
-        bcrypt.hash(password,10, async function (err, encrypted){
-            if (!encrypted) return res.status(200).send("Erro");
-            const ps = encrypted;
-            const user = await Users.create({name, password:ps, email});
-            user.password = undefined;
-            return res.status(201).send("Create");
-        }) 
+        if (userCheck) return res.status(201).send("Existe");
+        const ps = await bcrypt.hash(password, 10);
+        await Users.create({name, password:ps, email});
+        return res.status(201).send("Create");
     },
     alterPassword : async (req, res)=>{
         const { email, password } = req.body;
-        bcrypt.hash(password,10, async function (err, encrypted){
-            if (!encrypted) return res.status(200).send("Erro");
-            const ps = encrypted;
-            await Users.updateOne({email}, {"password" : ps}).exec();
-        
-            return res.status(201).send("2");
-        }) 
+        if (!password) return res.status(200).send("Erro");
+        const ps = await bcrypt.hash(password, 10);
+        await Users.updateOne({email}, {"password" : ps}).exec();
+
+        return res.status(201).send("2");
     },
     updateTime : async (req, res)=>{
         const { timeuse, email } = req.body;
@@ -31,20 +26,19 @@ const UserController ={
     },
     signin : async (req, res) =>{
         const { email, password } = req.body;
-        const userBuffer = await Users.findOne({ email }).exec();
-        const user= JSON.parse(JSON.stringify(userBuffer));
-        if (!user) return res.status(201).send("notExist"); 
-        const check = await bcrypt.compare(password, user.password);
+        const user = await Users.findOne({ email }).lean().exec();
+        if (!user) return res.status(201).send("notExist");
+        const check = await bcrypt.compare(password || '', user.password);
         if (!check) return res.status(201).send("Erro na autenticação de usuário, confira seus dados.");
         return res.status(201).send(user.name);
     },
     deleteUser: async (req, res)=>{
         const { email } = req.body;
-        await Users.deleteOne({ email })
+        await Users.deleteOne({ email }).exec();
         return res.status(200).send("ok");
     },
     getUsers: async (req, res)=>{
-        const users = await Users.find()
+        const users = await Users.find().select('-password').exec();
         return res.status(200).send(users);
     }
 }
